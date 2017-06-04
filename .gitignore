@@ -1,0 +1,16 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+*.so.dSYM/
+
+# datas
+data/
+
+#
+.idea/
+.DS_Store
+multitrain.py
