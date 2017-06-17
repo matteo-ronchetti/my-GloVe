@@ -65,24 +65,22 @@ public:
    }
 
    int compute_document_vector(vector<unsigned>& document, const string& path, int window_size){
-      char* buff = new char[250];
+      vector<char> buff;
+      buff.reserve(128);
 
       ifstream fin(path);
       if (!fin.is_open()) return 0;
 
-      int count = 0;
       char tmp;
       while (fin >> noskipws >> tmp) {
           if(tmp == ' ' || tmp == '\n'){
-             buff[count] = 0;
-             document.push_back(dict[string(buff)].first);
-             count = 0;
+             document.push_back(dict[string(&buff[0])].first);
+             buff.clear();
              if(tmp == '\n'){
                 document.resize(document.size()+window_size, 0);
              }
           }else{
-             buff[count] = tmp;
-             count++;
+             buff.push_back(tmp);
           }
       }
 

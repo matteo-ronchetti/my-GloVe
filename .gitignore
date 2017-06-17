@@ -14,3 +14,4 @@ data/
 .idea/
 .DS_Store
 multitrain.py
+py/*

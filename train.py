@@ -1,18 +1,40 @@
 from libs.glove import GloVe
+from __future__ import print_function
 import time
 import math
 import sys
+import os
+import argparse
 
-document_path = 'data/text8'
 
-if len(sys.argv) >= 2:
-    document_path = sys.argv[1]
+parser = argparse.ArgumentParser(description='This is an utility to train GloVe embeddings')
+parser.add_argument('document_path', help="the path of the document used to compute embeddings")
 
-glove = GloVe(window_size=12, embedding_size=64)
+parser.add_argument("-o", "--output", help="output name", default="embeddings")
+parser.add_argument("-w", "--window_size", type=int,
+                    help="Size of the cooccurrence window", default=10)
+parser.add_argument("-s", "--embedding_size", type=int,
+                    help="Size of the embeddings (must be a power of two)", default=32)
+parser.add_argument("-m", "--min_word_frequency", type=int,
+                    help="Minimum word frequency", default=5)
+parser.add_argument("-t", "--threads", type=int,
+                    help="Number of threads (-1 means automatic choice)", default=-1)
+parser.add_argument('--sqrt-weight',action='store_true', help="Use sqrt window weights")
 
-glove.set_window_weight_function(lambda x: 1.0/math.sqrt(x))
 
-glove.add_file(document_path)
+args = parser.parse_args()
+
+if not os.path.isdir(args.output):
+    os.mkdir(args.output)
+
+
+glove = GloVe(window_size=args.window_size, embedding_size=args.embedding_size, min_word_frequency=args.min_word_frequency, threads=args.threads)
+
+
+if args.sqrt_weight:
+    glove.set_window_weight_function(lambda x: 1.0/math.sqrt(x))
+
+glove.add_file(args.document_path)
 
 dict_time = time.time()
 print("Computing dictionary...")
@@ -20,7 +42,7 @@ word_count = glove.compute_dictionary()
 print("Got %d words" % word_count)
 print("Computed dictionary in %.2f seconds"%(time.time() - dict_time))
 
-glove.save_dictionary("dictionary.txt")
+glove.save_dictionary(os.path.join(args.output,"dictionary.txt"))
 
 cooccurrences_time = time.time()
 print("Computing cooccurrences...")
@@ -41,4 +63,5 @@ for i in range(num_iterations):
 
 print("Did %d iterations in %.2f seconds (%.2f seconds/iteration)"%(num_iterations, iter_total_time, iter_total_time/num_iterations))
 
-glove.save_embeddings("vectors.txt")
+glove.save_embeddings(os.path.join(args.output,"embeddings.txt"))
+print("Saved embeddings")

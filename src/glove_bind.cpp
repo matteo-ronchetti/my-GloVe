@@ -97,7 +97,7 @@ public:
 
    real train_iteration(real eta, real x_max, real decay, real mu, real nu){
       if(! embeddings.allocated ){
-         embeddings.allocate(dict.count);         
+         embeddings.allocate(dict.count);
       }
       return embeddings.train_iteration(cooccurrences, eta, x_max, decay, mu, nu);
    }

@@ -1,7 +1,7 @@
 import multiprocessing
 import os.path
 
-from _glove import _GloVe
+from ._glove import _GloVe
 
 
 class GloVe(object):
@@ -16,10 +16,12 @@ class GloVe(object):
         self.cpp = _GloVe(self.embedding_size, self.threads)
 
         self.text_files = []
+        self.setted_win_weight = False
 
     def set_window_weight_function(self, f):
-        weights = [1] + [f(x) for x in range(1, self.window_size+1)]
+        weights = [1] + [f(float(x)) for x in range(1, self.window_size+1)]
         self.cpp.set_window_weights(weights)
+        self.setted_win_weight = True
 
     def add_file(self, path):
         if os.path.isfile(path):
@@ -40,6 +42,9 @@ class GloVe(object):
         self.cpp.load_dictionary(path)
 
     def compute_coocurrences(self):
+        if not self.setted_win_weight:
+            self.set_window_weight_function(lambda x: 1.0/x)
+
         for text_file in self.text_files:
             self.cpp.compute_document_vector(text_file, self.window_size)
 

@@ -1,5 +1,6 @@
+import os
+import math
 import numpy as np
-import itertools
 from scipy.spatial import cKDTree
 
 
@@ -14,11 +15,14 @@ class WordEmbeddings(object):
     inverse_dictionary = {}
     frequences = {}
 
-    def __init__(self, path, dict_path):
+    def __init__(self, path):
+        vector_path = os.path.join(path, "vectors.txt")
+        dict_path = os.path.join(path, "dictionary.txt")
+
         print("Reading dictionary...")
         self._read_dictionary(dict_path)
         print("Reading vector embeddings...")
-        self._read_vectors(path)
+        self._read_vectors(vector_path)
         print("Building kd-tree...")
         self._make_tree()
 
@@ -56,7 +60,7 @@ class WordEmbeddings(object):
     def frequency_weight(self, w):
         return 1.0/self.frequences[w]
 
-    def match(self, x, num=10):
+    def match(self, x, num=20):
         xn = x / np.linalg.norm(x)
         _, winners = self.tree.query(xn, k=num)
         return [self.inverse_dictionary[i] for i in winners]
@@ -94,54 +98,72 @@ class WordEmbeddings(object):
     #         np.divide(self.vectors[w], norm, self.vectors[w])
     #         self.normalized[w] = self.vectors[w] / np.linalg.norm(self.vectors[w])
 
-    def analogy(self, a1, a2, b1):
+    def analogy(self, a1, a2, b1, num=20):
         v = self[a2] - self[a1] + self[b1]
         v /= np.linalg.norm(v)
-        _, winners = self.tree.query(v, 20)
+        _, winners = self.tree.query(v, num)
         words = [self.inverse_dictionary[i] for i in winners]
-        return [w for w in words if w not in [a1,a2,b1]]
+        return [w for w in words if w not in [a1, a2, b1]]
 
 
-def read_structured_file(path, cb=None):
-    res = dict()
-    key = None
+class SentenceEmbedder(object):
+    def __init__(self, word_embeddings, L=0):
+        self.word_embeddings = word_embeddings
+        self.L = L
 
-    with open(path) as f:
-        for line in f:
-            if len(line) > 1:
-                if line[0] in [' ', '\t']:
-                    data = line.strip()
-                    if len(data) > 0:
-                        if cb:
-                            res[key].append(cb(data))
-                        else:
-                            res[key].append(data)
-                else:
-                    line = line.strip()
-                    if line[-1] == ':':
-                        line = line[:-1]
-                    key = line.strip()
-                    res[key] = list()
+    @staticmethod
+    def triangular_weights(size, pos):
+        cx = pos + 0.5
+        h = 2.0 / size
+        ms = h / cx if cx else 0
+        me = h / (cx - size) if (cx-size) else 0
+        cxh = h + (0.5 * me - 0.5 * ms) / 4
 
-    return res
+        return [ms * (x + 0.5) for x in range(int(math.floor(pos)))] + [cxh] + [me * (x - size + 0.5) for x in range(int(math.floor(pos))+1, size)]
+
+    @staticmethod
+    def _represent(embeddings, weights_a, weights_b=None):
+        res = np.zeros(len(embeddings[0]))
+        if weights_b:
+            for i in range(len(embeddings)):
+                res += embeddings[i] * weights_a[i] * weights_b[i]
+        else:
+            for i in range(len(embeddings)):
+                res += embeddings[i] * weights_a[i]
+
+        return res
+
+    def __call__(self, txt):
+        res = []
+        words = [w for w in txt.split(" ") if w in self.word_embeddings]
+        embeddings = [self.word_embeddings[w] for w in words]
+
+        idfs = [self.word_embeddings.frequency_weight(w) for w in words]
+        tot_freq = sum(idfs)
+        idfs = [x / tot_freq for x in idfs]
+
+        res.append(self._represent(embeddings, idfs))
+        for j in range(0, self.L):
+            x = len(words) * (j + 0.5) / self.L
+            res.append(self._represent(embeddings, idfs, self.triangular_weights(len(words), x)))
+
+        embed = np.concatenate(res)
+        embed /= np.linalg.norm(embed)
+        return embed
 
 
-class WordRelations:
-    def __init__(self, path):
-        self.relations = read_structured_file(path, lambda x: x.split(" "))
+class SentenceMatcher(object):
+    def __init__(self, sentences, embedder):
+        self.sentences = sentences
+        self.embedder = embedder
 
-    def relation_vectors(self, embeddings):
-        arrows = dict()
-        for relation in self.relations:
-            arrows[relation] = np.zeros(embeddings.word_vector_len)
-            for pair in self.relations[relation]:
-                arrows[relation] += embeddings[pair[1]] - embeddings[pair[0]]
-            arrows[relation] /= len(self.relations[relation])
-        return arrows
+        self.embedded_sentences = np.array([self.embedder(sent) for sent in sentences])
+        self.tree = cKDTree(self.embedded_sentences)
 
-    def combinations(self):
-        for relation in self.relations:
-            pairs = self.relations[relation]
-            for analogy in itertools.product(pairs, pairs):
-                if analogy[0][0] != analogy[1][0]:
-                    yield analogy[0] + analogy[1]
+    def __call__(self, txt, num=10, scores=False):
+        query = self.embedder(txt)
+        _, winners = self.tree.query(query, k=num)
+        if scores:
+            return winners, [(1+np.dot(query, self.embedded_sentences[i]))/2 for i in winners]
+        return winners
+
