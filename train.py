@@ -1,5 +1,6 @@
-from libs.glove import GloVe
 from __future__ import print_function
+
+from libs.glove import GloVe
 import time
 import math
 import sys
@@ -13,6 +14,8 @@ parser.add_argument('document_path', help="the path of the document used to comp
 parser.add_argument("-o", "--output", help="output name", default="embeddings")
 parser.add_argument("-w", "--window_size", type=int,
                     help="Size of the cooccurrence window", default=10)
+parser.add_argument("-i", "--iterations", type=int,
+                    help="Number of iterations", default=15)
 parser.add_argument("-s", "--embedding_size", type=int,
                     help="Size of the embeddings (must be a power of two)", default=32)
 parser.add_argument("-m", "--min_word_frequency", type=int,
@@ -50,7 +53,7 @@ cooccurences_count = glove.compute_coocurrences()
 print("Got %d cooccurrences" % cooccurences_count)
 print("Computed cooccurrences in %.2f seconds"%(time.time() - cooccurrences_time))
 
-num_iterations = 15
+num_iterations = args.iterations
 iter_total_time = 0
 for i in range(num_iterations):
     iter_time_s = time.time()

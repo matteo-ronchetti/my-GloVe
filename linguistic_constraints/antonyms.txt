@@ -1,0 +1,481 @@
+
+ brazil france
+
+ germany italy
+
+ blue green
+
+ november october
+
+ export imports
+
+ female male
+
+ ireland spain
+
+ failures successes
+
+ irrational rational
+
+ greece portugal
+
+ future past
+
+ front rear
+
+ men woman
+
+ horizontal vertical
+
+ blue red
+
+ friday saturdays
+
+ better worse
+
+ belgium france
+
+ thicker thinner
+
+ iran pakistan
+
+ chile mexico
+
+ doctor patient
+
+ romania spain
+
+ iceland norway
+
+ canada italy
+
+ exporting imports
+
+ estonia lithuania
+
+ boys girls
+
+ colombia venezuela
+
+ netherlands switzerland
+
+ sunrise sunset
+
+ drier wet
+
+ austria germany
+
+ finland italy
+
+ italy netherlands
+
+ slovenia spain
+
+ flat sharp
+
+ brazil japan
+
+ argentina spain
+
+ brother sister
+
+ denmark sweden
+
+ females males
+
+ france sweden
+
+ buy sell
+
+ england germany
+
+ italy russia
+
+ brazil spain
+
+ england scotland
+nobody
+ noone
+
+ finland norway
+
+ greece spain
+
+ italy norway
+
+ bad good
+
+ britain russia
+ nobody noone
+
+ downstream upstream
+
+ back front
+
+ finland japan
+
+ india japan
+
+ britain germany
+
+ dependent independent
+
+ anybody nobody
+
+ leeward windward
+
+ germany japan
+
+ poland spain
+
+ argentina germany
+
+ finland spain
+
+ germany greece
+
+ denmark norway
+
+ kids parents
+
+ spain switzerland
+
+ downtown uptown
+
+ exporting importing
+
+ longer shorter
+
+ denmark spain
+
+ spain sweden
+
+ saturdays wednesdays
+
+ decreased increased
+
+ japan mexico
+
+ romania slovakia
+
+ thick thin
+
+ left right
+
+ italy japan
+
+ little much
+
+ females male
+
+ conservative liberal
+
+ high low
+
+ netherlands norway
+
+ sweden switzerland
+
+ complex simple
+
+ estonia latvia
+
+ red yellow
+
+ finland france
+
+ canada spain
+
+ insolvent solvent
+
+ nobody noone
+
+ japan sweden
+
+ bad best
+
+ italy poland
+
+ germany spain
+
+ past present
+
+ child mother
+
+ black white
+
+ man women
+
+ lawful unlawful
+
+ creditors debtors
+
+ children parent
+
+ easy hard
+
+ highest low
+
+ france netherlands
+
+ germany russia
+
+ finland germany
+
+ germany switzerland
+
+ evil good
+
+ man woman
+
+ japan spain
+
+ japan norway
+
+ canada norway
+
+ argentina brazil
+
+ men women
+
+ north south
+
+ children parents
+
+ father mothers
+
+ decreased increase
+
+ blacks whites
+
+ austria italy
+
+ africa asia
+
+ germany netherlands
+
+ china japan
+
+ china india
+
+ dry wet
+
+ creditor debtor
+
+ greece sweden
+
+ austria spain
+
+ finland sweden
+
+ illiterate literate
+
+ fridays saturdays
+
+ decrease increase
+
+ iran korea
+
+ negative positive
+
+ belgium spain
+
+ poor rich
+
+ hungary romania
+
+ long short
+
+ exports imports
+
+ france germany
+
+ belgium germany
+
+ employment unemployment
+
+ netherlands poland
+
+ france greece
+
+ portugal spain
+
+ brazil germany
+
+ australia spain
+
+ easy harder
+
+ russia spain
+
+ portugal sweden
+
+ friday saturday
+
+ germany ireland
+
+ daughter son
+
+ down up
+
+ doctors patients
+
+ finland netherlands
+
+ hungary poland
+
+ greece italy
+
+ maximum minimum
+
+ britain norway
+
+ denmark italy
+
+ norway sweden
+
+ downwind upwind
+
+ exported imported
+
+ bisexual homosexual
+
+ bought sold
+
+ argentina chile
+
+ boy girl
+
+ netherlands spain
+
+ green red
+
+ france portugal
+
+ belgium italy
+
+ black red
+
+ japan korea
+
+ decreases increase
+
+ france spain
+
+ mexico spain
+
+ italy romania
+
+ export import
+
+ france russia
+
+ norway spain
+
+ norway poland
+
+ germany norway
+
+ children mothers
+
+ italy spain
+
+ austria sweden
+
+ italy sweden
+
+ brazil mexico
+
+ kid parent
+
+ starts stops
+
+ faster slower
+
+ east west
+
+ bottom top
+
+ father mother
+
+ belgium netherlands
+
+ germany poland
+
+ belgium sweden
+
+ children mother
+
+ optimistic pessimistic
+
+ germany sweden
+
+ blue yellow
+
+ italy portugal
+
+ decrease increases
+
+ britain italy
+
+ france japan
+
+ large small
+
+ asleep awake
+
+ australia austria
+
+ inside outside
+
+ buying selling
+
+ england france
+
+ female males
+
+ denmark netherlands
+
+ argentina mexico
+
+ bad better
+
+ best worst
+
+ january july
+
+ france norway
+
+ denmark finland
+
+ decreases increases
+
+ decreasing increasing
+
+ impossible possible
+
+ easier harder
+
+ netherlands sweden
+
+ belgium luxembourg
+
+ afghanistan pakistan
+
+ exports import
+
+ february january
+
+ bulgaria romania
+
+ highs lows
+
+ france italy
+
+ india indonesia
+
+ germany turkey
+
+ hardware software
+
+ blue white

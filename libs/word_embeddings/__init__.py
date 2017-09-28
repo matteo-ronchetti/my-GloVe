@@ -16,7 +16,7 @@ class WordEmbeddings(object):
     frequences = {}
 
     def __init__(self, path):
-        vector_path = os.path.join(path, "vectors.txt")
+        vector_path = os.path.join(path, "embeddings.txt")
         dict_path = os.path.join(path, "dictionary.txt")
 
         print("Reading dictionary...")
